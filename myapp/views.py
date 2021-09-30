@@ -24,7 +24,7 @@ def my_view(request):
             print("count: ", count)
             # filelist = detection()
             # Redirect to the document list after POST
-            return redirect('my-view',count = 123)
+            return redirect('my-view')
         else:
             message = '表单有错.请修复一下错误:'
     else:

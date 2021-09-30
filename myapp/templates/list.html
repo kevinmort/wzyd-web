@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <title>Minimal Django File Upload Example</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta content="always" name="referrer">
+        <title>鞋钉检测</title>
         <link rel="stylesheet" type="text/css" href="/static/mystyle.css">
         <script src="/static/jquery-1.11.3.js"></script>
         <script src="/static/myjs.js"></script>
     </head>
 
     <body>
-         <button onclick="setRed()">red</button>
         <!-- List of uploaded documents -->
-        {% if documents %}
+   <!--      {% if documents %}
                 {% for document in documents %}
-                    <img src="{{ document.docfile.url }}"> <!-- {{ document.docfile.name }}</img> -->
+                    <img src="{{ document.docfile.url }}"> 
                 {% endfor %}
         {% else %}
             <p>No documents.</p>
-        {% endif %}
-       
+        {% endif %} -->
+       <img src="media/documents/0.jpg">
+       <img src="media/documents/0_d.jpg">       
         <!-- Upload form. Note enctype attribute! -->
         <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ message }}
-            
+
             <p>{{ form.non_field_errors }}</p>
 
             <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
