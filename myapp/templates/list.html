@@ -3,21 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>Minimal Django File Upload Example</title>
+        <link rel="stylesheet" type="text/css" href="/static/mystyle.css">
+        <script src="/static/jquery-1.11.3.js"></script>
+        <script src="/static/myjs.js"></script>
     </head>
 
     <body>
+         <button onclick="setRed()">red</button>
         <!-- List of uploaded documents -->
         {% if documents %}
-            数据库中的所有图片:
-        
                 {% for document in documents %}
                     <img src="{{ document.docfile.url }}"> <!-- {{ document.docfile.name }}</img> -->
                 {% endfor %}
-       
         {% else %}
             <p>No documents.</p>
         {% endif %}
-
+       
         <!-- Upload form. Note enctype attribute! -->
         <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
