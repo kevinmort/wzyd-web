@@ -61,6 +61,7 @@ def detection(path):
             print(result)
             im = cv2.imread(photo_dir)
             img = im.copy()
+            counts = len(result['Response'][2])
             for item in result['Response'][2]:
                 print(item)
                 cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
@@ -71,5 +72,5 @@ def detection(path):
                 print("img:",img)
 
                 cv2.imwrite(new_photo_dir, img)
-
+            return counts
 
