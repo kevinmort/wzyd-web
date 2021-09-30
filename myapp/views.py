@@ -3,9 +3,9 @@ from .models import Document
 from .forms import DocumentForm
 from .post_spike_detection import post_req,detection
 import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+file_docments = os.path.join(BASE_DIR,'media','documents')
 
-
-file_docments = "../media/documents"
 def my_view(request):
     print(f"Great! You're using Python 3.6+. If you fail here, use the right version.")
     message = 'Upload as many files as you want!'
@@ -19,15 +19,10 @@ def my_view(request):
             newdoc = Document(docfile=request.FILES['docfile'])
             newdoc.save()
             # rename all files
-            change_name('documents')
-
-            # post to detect post_req()
-
-
-
-            # # =========
+            change_name(file_docments)
+            detection(file_docments)
             # filelist = detection()
-            # # Redirect to the document list after POST
+            # Redirect to the document list after POST
             return redirect('my-view')
         else:
             message = '表单有错.请修复一下错误:'
@@ -60,7 +55,7 @@ def change_name(path,key=None):
         # 　　　　根据获取到的文件后缀，在上面的列表中遍历
         if wenjianmingchafen[1] in biaozhungeshi:
            #如果遍历到需要修改的文件，用os.rename(旧名字，新名字)
-           os.rename(path, wenjianlujin[0] + '/' + '00_'+str(key)+'.' + wenjianmingchafen[1])        #判断给定的路径是否是目录
+           os.rename(path, wenjianlujin[0] + '/' +str(key)+'.' + wenjianmingchafen[1])        #判断给定的路径是否是目录
     if os.path.isdir(path):
         # 如果是目录，则遍历目录列表中的所有项
         for key, x in enumerate(os.listdir(path)):

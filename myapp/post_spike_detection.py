@@ -19,7 +19,7 @@ raw = {"image_name" :'',
         "username":"inference"}
 #存放原始图片的目录，检测好的图片会存在同一目录下，文件名后增加_spike_detection字段
 # path = 'D:/shoe_photo/'
-path = 'documents/file'
+# path = "../media/documents"
 #API调用的公网接口
 urls = 'http://117.149.212.37:30080/xdjc'
 
@@ -40,12 +40,15 @@ def post_req(raw):
     req = requests.post(url=urls,data=textmod,headers=header_dict)
     return req.text
 
-def detection(filepath):
+
+def detection(path):
+    print("-----")
+    print(path)
     list = os.listdir(path)
     # 按顺序把文件夹中待检测的图片进行检测，标出鞋钉的位置再保存图片
     for photo in list:
         if '_spike_detection' not in photo:
-            photo_dir = path + photo
+            photo_dir = os.path.join(path, photo)
             image = Image.open(photo_dir)
             img = image_to_base64(image)
             name = photo_dir.split('/')[-1]
@@ -54,33 +57,19 @@ def detection(filepath):
             raw['image_path'] = img
             result = post_req(raw)
             result = json.loads(result)
+            # API输出结果显示，'NG', 4, [[144, 136, 20, 40], [213, 413, 17, 34], [213, 413, 17, 34], [213, 413, 17, 34]]表示检测出鞋钉、鞋钉的数量和坐标
+            print(result)
+            im = cv2.imread(photo_dir)
+            img = im.copy()
+            for item in result['Response'][2]:
+                print(item)
+                cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
+                new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
+                new_photo_dir = new_name
+                print("new_photo_dir:",new_photo_dir)
+                print("new_name:",new_name)
+                print("img:",img)
 
-            # {'Code': 0, 'Message': 'OK', 'Response': ['NG', 1, [[235, 119, 25, 29]]]}
-            return result
-
-# def detection(filepath):
-#     list = os.listdir(path)
-#     # 按顺序把文件夹中待检测的图片进行检测，标出鞋钉的位置再保存图片
-#     for photo in list:
-#         if '_spike_detection' not in photo:
-#             photo_dir = path + photo
-#             image = Image.open(photo_dir)
-#             img = image_to_base64(image)
-#             name = photo_dir.split('/')[-1]
-#             raw['image_name'] = name
-#             img = str(img, encoding='utf-8')
-#             raw['image_path'] = img
-#             result = post_req(raw)
-#             result = json.loads(result)
-#             # API输出结果显示，'NG', 4, [[144, 136, 20, 40], [213, 413, 17, 34], [213, 413, 17, 34], [213, 413, 17, 34]]表示检测出鞋钉、鞋钉的数量和坐标
-#             print(result)
-#             im = cv2.imread(photo_dir)
-#             img = im.copy()
-#             for item in result['Response'][2]:
-#                 # print(item)
-#                 cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
-#                 new_name = name.split('.')[0] + '_spike_detection.' + name.split('.')[1]
-#                 new_photo_dir = path + new_name
-#                 cv2.imwrite(new_photo_dir, img)
+                cv2.imwrite(new_photo_dir, img)
 
 
