@@ -8,7 +8,7 @@
     <body>
         <!-- List of uploaded documents -->
         {% if documents %}
-            All documents in the database:
+            数据库中的所有图片:
         
                 {% for document in documents %}
                     <img src="{{ document.docfile.url }}"> <!-- {{ document.docfile.name }}</img> -->
@@ -31,7 +31,7 @@
                 {{ form.docfile }} <!-- test -->
             </p>
 
-            <p><input type="submit" value="Upload"/></p>
+            <p><input type="submit" value="上传"/></p>
         </form>
     </body>
 </html>

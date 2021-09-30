@@ -16,7 +16,7 @@ def my_view(request):
             # Redirect to the document list after POST
             return redirect('my-view')
         else:
-            message = 'The form is not valid. Fix the following error:'
+            message = '表单有错.请修复一下错误:'
     else:
         form = DocumentForm()  # An empty, unbound form
 
