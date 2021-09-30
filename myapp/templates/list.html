@@ -17,22 +17,14 @@
                 {% endfor %}
         {% else %}
             <p>No documents.</p>
-<<<<<<< HEAD
-        {% endif %}
-
-=======
         {% endif %} -->
        <img src="media/documents/0.jpg">
-       <img src="media/documents/0_d.jpg">       
->>>>>>> 205ad1615e6967e07c830590b8404e8e53a2093a
+       <img src="media/documents/0_d.jpg">
         <!-- Upload form. Note enctype attribute! -->
         <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ message }}
-<<<<<<< HEAD
-=======
 
->>>>>>> 205ad1615e6967e07c830590b8404e8e53a2093a
             <p>{{ form.non_field_errors }}</p>
 
             <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
