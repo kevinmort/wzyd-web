@@ -24,7 +24,7 @@ def my_view(request):
             print("count: ", count)
             # filelist = detection()
             # Redirect to the document list after POST
-            return redirect('my-view',count = 123)
+            return redirect('my-view')
         else:
             message = '表单有错.请修复一下错误:'
     else:
@@ -46,7 +46,7 @@ def change_name(path,key=None):
         #用来区分文件目录和文件名称。2个打印内容实际中可以不写，这里主要是为了看清楚
         wenjianlujin=os.path.split(path)
         # print(wenjianlujin[0])  # 路径
-        # print(wenjianlujin[1])   # 文件名
+        print(wenjianlujin[1])   # 文件名
         # 下面这段代码主要是用来将获取到的文件名称按split方法来切割获取文件前缀和文件后缀
         wenjianmingchen = wenjianlujin[1]
         wenjianmingchafen=wenjianmingchen.split('.')
@@ -60,8 +60,9 @@ def change_name(path,key=None):
            os.rename(path, wenjianlujin[0] + '/' +str(key)+'.' + wenjianmingchafen[1])        #判断给定的路径是否是目录
     if os.path.isdir(path):
         # 如果是目录，则遍历目录列表中的所有项
+        file_list = []
         for key, x in enumerate(os.listdir(path)):
-            print(key)
+            # print(key)
             name = os.path.join(path, x)
             change_name(name,key)
 
@@ -77,6 +78,7 @@ def delete_files(path):
     if os.path.isdir(path):
         # 如果是目录，则遍历目录列表中的所有项
         for key, x in enumerate(os.listdir(path)):
-            print(key)
+            # print(key)
             name = os.path.join(path, x)
             delete_files(name)
+
