@@ -10,32 +10,58 @@
     </head>
 
     <body>
-        <!-- List of uploaded documents -->
-   <!--      {% if documents %}
-                {% for document in documents %}
-                    <img src="{{ document.docfile.url }}"> 
-                {% endfor %}
-        {% else %}
-            <p>No documents.</p>
-        {% endif %} -->
-       <img src="media/documents/0.jpg">
-       <img src="media/documents/0_d.jpg">
-        <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ message }}
+        <div class="container">
+            <!-- List of uploaded documents -->
+       <!--      {% if documents %}
+                    {% for document in documents %}
+                        <img src="{{ document.docfile.url }}">
+                    {% endfor %}
+            {% else %}
+                <p>No documents.</p>
+            {% endif %} -->
 
-            <p>{{ form.non_field_errors }}</p>
+            <!-- Upload form. Note enctype attribute! -->
+            <div class="header">
+                <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+        <!--            {{ message }}-->
 
-            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+        <!--            <p>{{ form.non_field_errors }}</p>-->
 
-            <p>
-                {{ form.docfile.errors }}
-                {{ form.docfile }} <!-- test -->
-            </p>
+        <!--            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>-->
+                    <div class = "fl">
+                        <div class="inline-ele"><p>
+                            {{ form.docfile.errors }}
+                            {{ form.docfile }} <!-- test -->
+                        </p></div>
+                        <div class="inline-ele"><p><input type="submit" value="上传"/></p></div>
+                        <div class="inline-ele"><p><input type="button" value="解析"/></p></div>
+                    </div>
+                </form>
+            </div>
+            <div class="page clearfix">
+                <div class="left">
+                        <img src="media/documents/0.jpg?{{ random }}" >
+                    </div>
+                    <div class="content">
+                        <img src="media/documents/0_d.jpg?{{ random }}" >
+                    </div>
+                </div>
+            </div>
 
-            <p><input type="submit" value="上传"/></p>
-        </form>
-        这有多少钉子：            {{ count }}
+            <div class="footer">
+            这有多少钉子：{{ count }}
+            </div>
+        </div>
     </body>
+<!--    <body>-->
+<!--        <div class="container">-->
+<!--            <div class="header">这是头部</div>-->
+<!--            <div class="page clearfix">-->
+<!--                <div class="left">left sidebar</div>-->
+<!--                <div class="content">main content</div>-->
+<!--            </div>-->
+<!--            <div class="footer">footer section</div>-->
+<!--        </div>-->
+<!--    </body>-->
 </html>

@@ -1,14 +1,17 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.urls import reverse
+
 from .models import Document
 from .forms import DocumentForm
 from .post_spike_detection import post_req,detection
-import os
+import os,time
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 file_docments = os.path.join(BASE_DIR,'media','documents')
-
+count = ''
 def my_view(request):
-    message = 'Upload as many files as you want!'
-    count = '1010'
+    message = '请上传1个待检测的文件'
+    count = ""
     # Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -20,22 +23,28 @@ def my_view(request):
             newdoc.save()
             # rename all files
             change_name(file_docments)
-            count = detection(file_docments)
-            print("count: ", count)
+            count = str(detection(file_docments))
             # filelist = detection()
             # Redirect to the document list after POST
-            return redirect('my-view')
+            request.Count = count
+            # return redirect('my-view', username=request.Count)
+            return redirect(f"{reverse('my-view')}?count={count}")
+            # return HttpResponseRedirect(reverse('getting_started_info', kwargs={'count': count}))
+            # return redirect(f"{reverse('my-view')}?count='How to redirect with arguments'")
+
         else:
             message = '表单有错.请修复一下错误:'
     else:
-        count = "10"
+        print(request)
+        count = request.GET.get('count', default='')
+        print("count: ", count)
         form = DocumentForm()  # An empty, unbound form
 
     # Load documents for the list page
     documents = Document.objects.all()
-
+    random = int(round(time.time() * 1000000))
     # Render list page with the documents and the form
-    context = {'documents': documents, 'form': form, 'message': message, 'count': count}
+    context = {'documents': documents, 'form': form, 'message': message, 'count': count,'random':random}
     return render(request, 'list.html', context)
 
 def change_name(path,key=None):
