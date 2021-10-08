@@ -30,7 +30,7 @@ def my_view(request):
             print('count:', count)
             # filelist = detection()
             # Redirect to the document list after POST
-            # return redirect('my-view', username=request.Count)
+            # return redirect('my-view')
             return redirect(f"{reverse('my-view')}?count={count}")
             # return HttpResponseRedirect(reverse('getting_started_info', kwargs={'count': count}))
             # return redirect(f"{reverse('my-view')}?count='How to redirect with arguments'")
