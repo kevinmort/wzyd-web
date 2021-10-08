@@ -8,19 +8,22 @@ html,body{
     height:50%;/*ie6不识别min-height,如上述处理*/
     position:relative;}
 .header{
-    background:#6cf;padding:10px;width:61%;margin-bottom:20px;display:block;}
+    background:#6cf;padding:10px;width:50%;margin-bottom:20px;display:block;}
 .page{
     width:960px;padding-bottom:20px;/*padding等于footer的高度*/}
 .footer{
-    position:relative;bottom:0;width:59%;height:50px;/*footer的高度*/background:#6cf;clear:both;}
+    position:relative;bottom:0;width:50%;height:70px;/*footer的高度*/background:#6cf;clear:both;
+    text-align:center;}
 .left{
-    width:40%;height:400px;float:left;margin-right:20px;background:lime;}
+    width:40%;height:600px;float:left;margin-right:20px;}
 .content{
-    background:orange;width:40%;height:400px;float:left;margin-right:20px;}
+   width:40%;height:600px;float:left;margin-right:20px;}
 .clearfix:after,
 .clearfix:before{content:"";display:table}
 .clearfix:after{clear:both;overflow:hidden}
 .clearfix{zoom:1;}
 .fl{display:block;}
 .inline-ele{display:inline-block;margin-right:30px;}
- img{ width:100%;}
+ img {
+    max-height: 600px;
+}
