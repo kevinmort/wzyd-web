@@ -59,10 +59,12 @@ def detection(path):
             img = im.copy()
             # counts = len(result['Response'][2])
             for item in result['Response'][2]:
-                # print(item)
+                print(item)
                 cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                 new_photo_dir = new_name
+                print('new_name:', new_name)
+                print(path)
                 cv2.imwrite(new_photo_dir, img)
             return result['Response']
 
