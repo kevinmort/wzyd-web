@@ -1,12 +1,22 @@
 
-html,body{margin-left:20px;padding:0;height:100%}
-.container{min-height:50%;height:auto !important;height:50%;/*ie6不识别min-height,如上述处理*/position:relative;}
-.header{background:#ff0;padding:10px;width:50%;margin-bottom:20px;display:block;}
-.page{width:960px;padding-bottom:20px;/*padding等于footer的高度*/}
-.footer{position:absolute;bottom:0;width:52%;height:60px;/*footer的高度*/background:#6cf;clear:both;}
-.left{width:40%;height:400px;float:left;margin-right:20px;background:lime;}
-.content{background:orange;width:40%;height:400px;float:left;margin-right:20px;}
-.right{width:220px;float:right;background:green;}
+html,body{
+    padding:0;height:100%;
+    background-image:url("/static/bg.png");
+    background-repeat: no-repeat;
+	background-size: 100% 100%;}
+.container{ margin-left:20px;min-height:50%;height:auto !important;
+    height:50%;/*ie6不识别min-height,如上述处理*/
+    position:relative;}
+.header{
+    background:#6cf;padding:10px;width:61%;margin-bottom:20px;display:block;}
+.page{
+    width:960px;padding-bottom:20px;/*padding等于footer的高度*/}
+.footer{
+    position:relative;bottom:0;width:59%;height:50px;/*footer的高度*/background:#6cf;clear:both;}
+.left{
+    width:40%;height:400px;float:left;margin-right:20px;background:lime;}
+.content{
+    background:orange;width:40%;height:400px;float:left;margin-right:20px;}
 .clearfix:after,
 .clearfix:before{content:"";display:table}
 .clearfix:after{clear:both;overflow:hidden}

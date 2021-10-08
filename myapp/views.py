@@ -35,16 +35,22 @@ def my_view(request):
         else:
             message = '表单有错.请修复一下错误:'
     else:
-        print(request)
+        # print(request)
         count = request.GET.get('count', default='')
-        print("count: ", count)
+        if count != '':
+            message1 = '发现钉子'
+            message2 = '发现'+count+"个钉子"
+        else:
+            message1 = '没有发现钉子'
+            message2 = ''
+        # print("count: ", count)
         form = DocumentForm()  # An empty, unbound form
 
     # Load documents for the list page
     documents = Document.objects.all()
     random = int(round(time.time() * 1000000))
     # Render list page with the documents and the form
-    context = {'documents': documents, 'form': form, 'message': message, 'count': count,'random':random}
+    context = {'documents': documents, 'form': form, 'message': message, 'count': count,'random':random,'message1':message1,'message2':message2}
     return render(request, 'list.html', context)
 
 def change_name(path,key=None):
