@@ -53,16 +53,16 @@ def detection(path):
             raw['image_path'] = img
             result = post_req(raw)
             result = json.loads(result)
+            # print(result)
             # API输出结果显示，'NG', 4, [[144, 136, 20, 40], [213, 413, 17, 34], [213, 413, 17, 34], [213, 413, 17, 34]]表示检测出鞋钉、鞋钉的数量和坐标
-            print(result)
             im = cv2.imread(photo_dir)
             img = im.copy()
-            counts = len(result['Response'][2])
+            # counts = len(result['Response'][2])
             for item in result['Response'][2]:
                 # print(item)
                 cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                 new_photo_dir = new_name
                 cv2.imwrite(new_photo_dir, img)
-            return counts
+            return result['Response']
 

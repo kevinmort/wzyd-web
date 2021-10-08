@@ -3,27 +3,52 @@ html,body{
     padding:0;height:100%;
     background-image:url("/static/bg.png");
     background-repeat: no-repeat;
-	background-size: 100% 100%;}
-.container{ margin-left:20px;min-height:50%;height:auto !important;
+	background-size: 100% 100%;
+	}
+.container{ min-height:50%;height:auto !important;
     height:50%;/*ie6不识别min-height,如上述处理*/
-    position:relative;}
+    position:relative;
+    margin-left: auto;
+    margin-right: auto;}
 .header{
-    background:#6cf;padding:10px;width:50%;margin-bottom:20px;display:block;}
+    background:#6cf;padding-top:30px;width:60%;margin-bottom:20px;display:block;
+    margin-top:50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    }
 .page{
-    width:960px;padding-bottom:20px;/*padding等于footer的高度*/}
+    width:960px;padding-bottom:20px;/*padding等于footer的高度*/
+    margin-left: auto;
+    margin-right: auto;
+    display:block;}
 .footer{
-    position:relative;bottom:0;width:50%;height:70px;/*footer的高度*/background:#6cf;clear:both;
-    text-align:center;}
+    position:relative;bottom:0;width:60%;height:80px;/*footer的高度*/background:#6cf;clear:both;
+    text-align:center;
+    color:#FFF;
+    margin-top:20px;
+    margin-left: auto;
+    margin-right: auto;}
 .left{
-    width:40%;height:600px;float:left;margin-right:20px;}
+    width:40%;height:600px;margin-right:20px;
+    margin-right: 20px;
+    display:inline-block;
+    border:thin solid blue}
 .content{
-   width:40%;height:600px;float:left;margin-right:20px;}
+   width:40%;height:600px;
+    display:inline-block;
+    border:thin solid blue}
 .clearfix:after,
 .clearfix:before{content:"";display:table}
 .clearfix:after{clear:both;overflow:hidden}
 .clearfix{zoom:1;}
-.fl{display:block;}
-.inline-ele{display:inline-block;margin-right:30px;}
+.fl{display:block;margin-left: auto;
+margin-right: auto;}
+.inline-ele{
+    display:inline-block;
+    padding:2px 0;
+    margin-top:10px;
+    }
  img {
     max-height: 600px;
 }

@@ -13,6 +13,7 @@ def my_view(request):
     message = '请上传1个待检测的文件'
     count = ""
     # Handle file upload
+    bg_img_flag = 0
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         print(request.FILES)
@@ -23,10 +24,12 @@ def my_view(request):
             newdoc.save()
             # rename all files
             change_name(file_docments)
-            count = str(detection(file_docments))
+            respone = detection(file_docments)
+            print("respone:", respone)
+            count = len(respone[2])
+            print('count:', count)
             # filelist = detection()
             # Redirect to the document list after POST
-            request.Count = count
             # return redirect('my-view', username=request.Count)
             return redirect(f"{reverse('my-view')}?count={count}")
             # return HttpResponseRedirect(reverse('getting_started_info', kwargs={'count': count}))
@@ -34,23 +37,36 @@ def my_view(request):
 
         else:
             message = '表单有错.请修复一下错误:'
-    else:
+    else: # GET
         # print(request)
-        count = request.GET.get('count', default='')
-        if count != '':
-            message1 = '发现钉子'
-            message2 = '发现'+count+"个钉子"
+        count = request.GET.get('count', default=None)
+        if count is not None:
+            if int(count) >= 1:
+                message1 = '不合格，发现钉子！'
+                message2 = count +" 个钉子已在图上标出"
+                bg_img_flag = 1
+
+            elif int(count) == 0:
+                message1 = '合格'
+                message2 = '没有发现钉子'
+                bg_img_flag = 1
+
         else:
-            message1 = '没有发现钉子'
-            message2 = ''
-        # print("count: ", count)
+            message1 = '还未上传图片'
+            message2 = '请上传图片'
+            bg_img_flag = 0
         form = DocumentForm()  # An empty, unbound form
 
     # Load documents for the list page
     documents = Document.objects.all()
     random = int(round(time.time() * 1000000))
     # Render list page with the documents and the form
-    context = {'documents': documents, 'form': form, 'message': message, 'count': count,'random':random,'message1':message1,'message2':message2}
+    context = {'documents': documents,
+               'form': form, 'message': message,
+               'count': count,
+               'random':random,'message1':message1,'message2':message2,
+               'bg_img_flag':bg_img_flag
+               }
     return render(request, 'list.html', context)
 
 def change_name(path,key=None):

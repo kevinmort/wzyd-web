@@ -5,8 +5,11 @@
 		<meta content="always" name="referrer">
         <title>鞋钉检测</title>
         <link rel="stylesheet" type="text/css" href="/static/mystyle.css">
-        <script src="/static/jquery-1.11.3.js"></script>
+        <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<!--        <script src="/static/jquery-1.11.3.js"></script>-->
         <script src="/static/myjs.js"></script>
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
     <body>
@@ -21,7 +24,7 @@
             {% endif %} -->
 
             <!-- Upload form. Note enctype attribute! -->
-            <div class="header">
+            <div class="header thumbnail" style="background:rgba(102,204,255,0.2);">
                 <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
         <!--            {{ message }}-->
@@ -30,30 +33,40 @@
 
         <!--            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>-->
                     <div class = "fl">
-                        <div class="inline-ele"><p>
+                        <div class="inline-ele "><p>
+
+                         <label for="id_docfile" class=" btn btn-primary">
                             {{ form.docfile.errors }}
                             {{ form.docfile }} <!-- test -->
+                         </label>
                         </p></div>
-                        <div class="inline-ele"><p><input type="submit" value="上传"/></p></div>
-                        <div class="inline-ele"><p><input type="button" value="解析"/></p></div>
+                        <div class="inline-ele"><p><input class="btn btn-primary" type="submit" value="上传图像"/></p></div>
+                        <div class="inline-ele"><p><input class="btn btn-primary" type="button" value="解析图像"/></p></div>
                     </div>
                 </form>
             </div>
             <div class="page clearfix">
+                <div align="center" text-align="center">
                 <div class="left">
-                        <img src="media/documents/0.jpg?{{ random }}" >
+                    {% if bg_img_flag %}
+                        <img class="img-rounded img-responsive" src="media/documents/0.jpg?{{ random }}" >
+                    {% endif %}
                 </div>
                 <div class="content">
-                        <img src="media/documents/0_d.jpg?{{ random }}" >
+                    {% if bg_img_flag %}
+                         <img class= "img-rounded img-responsive" src="media/documents/0_d.jpg?{{ random }}" >
+                    {% endif %}
+                </div>
                 </div>
             </div>
-            <div class="footer">
-                <div>
+            <div class="footer thumbnail" style="background:rgba(102,204,255,0.2);" >
+                <div style="text-align:left;margin-left:20px;">
             解析结果：
-                </br>
+                </div>
                 {{ message1 }}
-                                </br>
+                </br>
                 {{ message2}}
+
                 </div>
             </div>
         </div>
