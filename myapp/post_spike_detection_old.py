@@ -61,7 +61,7 @@ for photo in list:
             print(item)
             cv2.rectangle(img, (item[0], item[1]), (item[0]+item[2], item[1]+item[3]), (0, 255, 0),5)
             new_name = name.split('.')[0]+'_spike_detection.'+name.split('.')[1]
-            print(new_name)
-            new_photo_dir = path+new_name
+            new_photo_dir = os.path.join(path, new_name)
+            print("new_name:", new_name)
             print("new_photo_dir:",new_photo_dir)
             cv2.imwrite(new_photo_dir,img)

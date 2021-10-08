@@ -43,11 +43,14 @@ def detection(path):
     list = os.listdir(path)
     # 按顺序把文件夹中待检测的图片进行检测，标出鞋钉的位置再保存图片
     for photo in list:
+        print('photo:', photo)
         if '_d' not in photo:
             photo_dir = os.path.join(path, photo)
             image = Image.open(photo_dir)
             img = image_to_base64(image)
-            name = photo_dir.split('/')[-1]
+            # name = photo_dir.split('/')[-1]
+            name = photo_dir.split('\\')[-1]
+            print('name:', name)
             raw['image_name'] = name
             img = str(img, encoding='utf-8')
             raw['image_path'] = img
@@ -59,12 +62,10 @@ def detection(path):
             img = im.copy()
             # counts = len(result['Response'][2])
             for item in result['Response'][2]:
-                print(item)
+                # print(item)
                 cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
-                new_photo_dir = new_name
-                print('new_name:', new_name)
-                print(path)
-                cv2.imwrite(new_photo_dir, img)
+                print("new_name:",new_name)
+                cv2.imwrite(new_name, img)
             return result['Response']
 

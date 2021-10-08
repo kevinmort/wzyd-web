@@ -6,8 +6,11 @@ from .models import Document
 from .forms import DocumentForm
 from .post_spike_detection import post_req,detection
 import os,time
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.getcwd()
+print('BASE_DIR:',BASE_DIR)
+
 file_docments = os.path.join(BASE_DIR,'media','documents')
+print('join:',file_docments)
 count = ''
 def my_view(request):
     message = '请上传1个待检测的文件'
