@@ -1,14 +1,16 @@
 
-body {
-    padding: auto;
-    text-align: center;
-}
-
-
-form {
-    padding: auto;
-    text-align: left;
-    width: 800px;
-    border: 1px dashed #f69c;
-
-}
+html,body{margin-left:20px;padding:0;height:100%}
+.container{min-height:50%;height:auto !important;height:50%;/*ie6不识别min-height,如上述处理*/position:relative;}
+.header{background:#ff0;padding:10px;width:50%;margin-bottom:20px;display:block;}
+.page{width:960px;padding-bottom:20px;/*padding等于footer的高度*/}
+.footer{position:absolute;bottom:0;width:52%;height:60px;/*footer的高度*/background:#6cf;clear:both;}
+.left{width:40%;height:400px;float:left;margin-right:20px;background:lime;}
+.content{background:orange;width:40%;height:400px;float:left;margin-right:20px;}
+.right{width:220px;float:right;background:green;}
+.clearfix:after,
+.clearfix:before{content:"";display:table}
+.clearfix:after{clear:both;overflow:hidden}
+.clearfix{zoom:1;}
+.fl{display:block;}
+.inline-ele{display:inline-block;margin-right:30px;}
+ img{ width:100%;}

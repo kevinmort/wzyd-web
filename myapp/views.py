@@ -1,14 +1,17 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.urls import reverse
+
 from .models import Document
 from .forms import DocumentForm
 from .post_spike_detection import post_req,detection
-import os
+import os,time
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 file_docments = os.path.join(BASE_DIR,'media','documents')
-
+count = ''
 def my_view(request):
-    message = 'Upload as many files as you want!'
-    count = '1010'
+    message = '请上传1个待检测的文件'
+    count = ""
     # Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -20,22 +23,28 @@ def my_view(request):
             newdoc.save()
             # rename all files
             change_name(file_docments)
-            count = detection(file_docments)
-            print("count: ", count)
+            count = str(detection(file_docments))
             # filelist = detection()
             # Redirect to the document list after POST
-            return redirect('my-view')
+            request.Count = count
+            # return redirect('my-view', username=request.Count)
+            return redirect(f"{reverse('my-view')}?count={count}")
+            # return HttpResponseRedirect(reverse('getting_started_info', kwargs={'count': count}))
+            # return redirect(f"{reverse('my-view')}?count='How to redirect with arguments'")
+
         else:
             message = '表单有错.请修复一下错误:'
     else:
-        count = "10"
+        print(request)
+        count = request.GET.get('count', default='')
+        print("count: ", count)
         form = DocumentForm()  # An empty, unbound form
 
     # Load documents for the list page
     documents = Document.objects.all()
-
+    random = int(round(time.time() * 1000000))
     # Render list page with the documents and the form
-    context = {'documents': documents, 'form': form, 'message': message, 'count': count}
+    context = {'documents': documents, 'form': form, 'message': message, 'count': count,'random':random}
     return render(request, 'list.html', context)
 
 def change_name(path,key=None):
@@ -46,7 +55,7 @@ def change_name(path,key=None):
         #用来区分文件目录和文件名称。2个打印内容实际中可以不写，这里主要是为了看清楚
         wenjianlujin=os.path.split(path)
         # print(wenjianlujin[0])  # 路径
-        # print(wenjianlujin[1])   # 文件名
+        print(wenjianlujin[1])   # 文件名
         # 下面这段代码主要是用来将获取到的文件名称按split方法来切割获取文件前缀和文件后缀
         wenjianmingchen = wenjianlujin[1]
         wenjianmingchafen=wenjianmingchen.split('.')
@@ -60,8 +69,9 @@ def change_name(path,key=None):
            os.rename(path, wenjianlujin[0] + '/' +str(key)+'.' + wenjianmingchafen[1])        #判断给定的路径是否是目录
     if os.path.isdir(path):
         # 如果是目录，则遍历目录列表中的所有项
+        file_list = []
         for key, x in enumerate(os.listdir(path)):
-            print(key)
+            # print(key)
             name = os.path.join(path, x)
             change_name(name,key)
 
@@ -77,6 +87,7 @@ def delete_files(path):
     if os.path.isdir(path):
         # 如果是目录，则遍历目录列表中的所有项
         for key, x in enumerate(os.listdir(path)):
-            print(key)
+            # print(key)
             name = os.path.join(path, x)
             delete_files(name)
+

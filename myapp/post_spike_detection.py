@@ -1,13 +1,11 @@
 #python3
 # -*- coding: utf-8 -*-
 import json
-import numpy as np
 import base64
 from io import BytesIO
 from PIL import Image
 import time
 import requests
-import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 import os
@@ -42,8 +40,6 @@ def post_req(raw):
 
 
 def detection(path):
-    print("-----")
-    print(path)
     list = os.listdir(path)
     # 按顺序把文件夹中待检测的图片进行检测，标出鞋钉的位置再保存图片
     for photo in list:
@@ -58,19 +54,15 @@ def detection(path):
             result = post_req(raw)
             result = json.loads(result)
             # API输出结果显示，'NG', 4, [[144, 136, 20, 40], [213, 413, 17, 34], [213, 413, 17, 34], [213, 413, 17, 34]]表示检测出鞋钉、鞋钉的数量和坐标
-            print(result)
+            # print(result)
             im = cv2.imread(photo_dir)
             img = im.copy()
             counts = len(result['Response'][2])
             for item in result['Response'][2]:
-                print(item)
+                # print(item)
                 cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                 new_photo_dir = new_name
-                print("new_photo_dir:",new_photo_dir)
-                print("new_name:",new_name)
-                print("img:",img)
-
                 cv2.imwrite(new_photo_dir, img)
             return counts
 
