@@ -43,7 +43,7 @@ def detection(path):
     list = os.listdir(path)
     # 按顺序把文件夹中待检测的图片进行检测，标出鞋钉的位置再保存图片
     for photo in list:
-        if '_spike_detection' not in photo:
+        if '_d' not in photo:
             photo_dir = os.path.join(path, photo)
             image = Image.open(photo_dir)
             img = image_to_base64(image)
@@ -51,18 +51,19 @@ def detection(path):
             raw['image_name'] = name
             img = str(img, encoding='utf-8')
             raw['image_path'] = img
-            result = post_req(raw)
-            result = json.loads(result)
+            result_raw = post_req(raw)
+            result = json.loads(result_raw)
             # print(result)
             # API输出结果显示，'NG', 4, [[144, 136, 20, 40], [213, 413, 17, 34], [213, 413, 17, 34], [213, 413, 17, 34]]表示检测出鞋钉、鞋钉的数量和坐标
             im = cv2.imread(photo_dir)
             img = im.copy()
             # counts = len(result['Response'][2])
             for item in result['Response'][2]:
-                # print(item)
+                print(item)
                 cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                 new_photo_dir = new_name
+                print(new_photo_dir)
                 cv2.imwrite(new_photo_dir, img)
-            return result['Response']
+            return result
 
