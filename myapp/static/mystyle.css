@@ -11,8 +11,14 @@ html,body{
     margin-left: auto;
     margin-right: auto;}
 .header{
-    background:#6cf;padding-top:30px;width:60%;margin-bottom:20px;display:block;
-    margin-top:50px;
+    background:#6cf;padding-top:30px;width:59%;margin-bottom:20px;display:block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    }
+.header2{
+    width:100%;
+    display:block;
     margin-left: auto;
     margin-right: auto;
     text-align:center;
@@ -50,8 +56,18 @@ margin-right: auto;}
     margin-top:10px;
     float:top;
     }
+.fl2{display:block;margin-left: auto;
+margin-right: auto;}
+.inline-ele2{
+    display:inline-block;
+        margin-top:20px;
+        float:bottom;
+    }
  img {
     max-height: 600px;
+}
+img.logimg{
+    max-height: 40px;
 }
 li {
     color:red;

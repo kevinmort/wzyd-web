@@ -32,6 +32,14 @@
             {% endif %} -->
 
             <!-- Upload form. Note enctype attribute! -->
+            <div class="header2 thumbnail" style="background:rgba(102,204,255,0);border:none" >
+                <div class = "fl2" style="background:rgba(102,204,255,0);" >
+                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/cmlogo.png"></div>
+                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/egdelogo.png"></div>
+<!--                    <div class="inline-ele " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/hackathon.png"></div>-->
+                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/starlogo.png"></div>
+                </div>
+            </div>
             <div class="header thumbnail" style="background:rgba(102,204,255,0.2);">
                 <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
