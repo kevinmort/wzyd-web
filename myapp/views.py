@@ -1,11 +1,10 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .models import Document
 from .forms import DocumentForm
 from .post_spike_detection import post_req,detection
-import os,time
+import os,time,json
 BASE_DIR = os.getcwd()
 print('BASE_DIR:',BASE_DIR)
 
@@ -14,9 +13,12 @@ print('join:',file_docments)
 count = ''
 def my_view(request):
     message = '请上传1个待检测的文件'
+    message1 = ''
+    message2=''
     count = ""
     # Handle file upload
     bg_img_flag = 0
+    null_count_flag = 0
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         print(request.FILES)
@@ -27,33 +29,37 @@ def my_view(request):
             newdoc.save()
             # rename all files
             change_name(file_docments)
-            respone = detection(file_docments)
-            print("respone:", respone)
-            count = len(respone[2])
-            print('count:', count)
+            respone_raw = detection(file_docments)
+            result = json.loads(respone_raw)
+            count = len(result['Response'][2])
+            positons = str(result['Response'][2])
+
+            print('------------------positons:', positons)
             # filelist = detection()
             # Redirect to the document list after POST
             # return redirect('my-view')
-            return redirect(f"{reverse('my-view')}?count={count}")
+            return redirect(f"{reverse('my-view')}?count={count}&positons={positons}")
             # return HttpResponseRedirect(reverse('getting_started_info', kwargs={'count': count}))
             # return redirect(f"{reverse('my-view')}?count='How to redirect with arguments'")
 
         else:
             message = '表单有错.请修复一下错误:'
     else: # GET
-        # print(request)
+        print(request)
         count = request.GET.get('count', default=None)
-        if count is not None:
+        positons = request.GET.get('positons', default=None)
+        if count is not None and positons is not None:
             if int(count) >= 1:
-                message1 = '不合格，发现钉子！'
-                message2 = count +" 个钉子已在图上标出"
+                message1 = '不合格，发现钉子 '+count+'个'
+                message2 = "坐标："+ positons
                 bg_img_flag = 1
+                null_count_flag = 0
 
             elif int(count) == 0:
                 message1 = '合格'
                 message2 = '没有发现钉子'
                 bg_img_flag = 1
-
+                null_count_flag = 1
         else:
             message1 = '还未上传图片'
             message2 = '请上传图片'
@@ -68,7 +74,8 @@ def my_view(request):
                'form': form, 'message': message,
                'count': count,
                'random':random,'message1':message1,'message2':message2,
-               'bg_img_flag':bg_img_flag
+               'bg_img_flag':bg_img_flag,
+               'null_count_flag':null_count_flag,
                }
     return render(request, 'list.html', context)
 
@@ -87,7 +94,7 @@ def change_name(path,key=None):
         # print(wenjianmingchafen[0])
         # print(wenjianmingchafen[1])
         #定义一个列表，用来规定哪些文件满足要改名字的后缀
-        biaozhungeshi=['bmp','jpeg','gft','psd','png','jpg']
+        biaozhungeshi=['jpeg','jpg']
         # 　　　　根据获取到的文件后缀，在上面的列表中遍历
         if wenjianmingchafen[1] in biaozhungeshi:
            #如果遍历到需要修改的文件，用os.rename(旧名字，新名字)

@@ -9,6 +9,15 @@
         <script src="/static/myjs.js"></script>
         <script src="/static/jquery.min.js"></script>
         <script src="/static/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            function run2(){
+                var imgId2 = document.getElementById("scan_img");
+                imgId2.style.visibility ="visible";
+                var result_bar = document.getElementById("result_bar");
+                result_bar.style.visibility ="visible";
+            }
+        </script>
+
     </head>
 
     <body>
@@ -33,14 +42,13 @@
         <!--            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>-->
                     <div class = "fl">
                         <div class="inline-ele "><p>
-
+                         {{ form.docfile.errors }}
                          <label for="id_docfile" class=" btn btn-primary">
-                            {{ form.docfile.errors }}
                             {{ form.docfile }} <!-- test -->
-                         </label>
+                          </label>
                         </p></div>
-                        <div class="inline-ele"><p><input class="btn btn-primary" type="submit" value="上传图像"/></p></div>
-                        <div class="inline-ele"><p><input class="btn btn-primary" type="button" value="解析图像"/></p></div>
+                        <div class="inline-ele"><p><input class="btn btn-primary" type="submit" value="上传图像"></p></div>
+                        <div class="inline-ele"><p><input class="btn btn-primary" type="button" value="解析图像" onclick="run2();" ></p></div>
                     </div>
                 </form>
 
@@ -54,19 +62,24 @@
                 </div>
                 <div class="content">
                     {% if bg_img_flag %}
-                         <img class= "img-rounded img-responsive" src="media/documents/0_d.jpg?{{ random }}" >
+                        {% if null_count_flag %}
+                         <img id = 'scan_img' class= "img-rounded img-responsive" style="visibility:hidden" src="media/documents/0.jpg?{{ random }}" >
+                                    {% else %}
+                         <img id = 'scan_img' class= "img-rounded img-responsive" style="visibility:hidden" src="media/documents/0_d.jpg?{{ random }}" >
+                        {% endif %}
                     {% endif %}
                 </div>
                 </div>
             </div>
             <div class="footer thumbnail" style="background:rgba(102,204,255,0.2);" >
-                <div style="text-align:left;margin-left:20px;">
+                <div  style="text-align:left;margin-left:20px;">
             解析结果：
                 </div>
-                {{ message1 }}
-                </br>
-                {{ message2}}
-
+                <p id = 'result_bar' style="visibility:hidden;">
+                    {{ message1 }}
+<!--                </br>-->
+                    {{ message2}}
+                </p>
                 </div>
             </div>
         </div>

@@ -48,8 +48,9 @@ def detection(path):
             photo_dir = os.path.join(path, photo)
             image = Image.open(photo_dir)
             img = image_to_base64(image)
-            # name = photo_dir.split('/')[-1]
-            name = photo_dir.split('\\')[-1]
+            name = photo_dir
+            # name = photo_dir.split('/')[-1]  # winows
+            # name = photo_dir.split('\\')[-1]  # linux
             print('name:', name)
             raw['image_name'] = name
             img = str(img, encoding='utf-8')
@@ -67,5 +68,7 @@ def detection(path):
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                 print("new_name:",new_name)
                 cv2.imwrite(new_name, img)
-            return result['Response']
+            # return result['Response']
+            return result_raw
+
 
