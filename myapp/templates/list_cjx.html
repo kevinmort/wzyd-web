@@ -43,8 +43,6 @@
             </div>
             <div class="header thumbnail" style="background:rgba(102,204,255,0.2);">
                 <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-
         <!--            {{ message }}-->
 
         <!--            <p>{{ form.non_field_errors }}</p>-->
@@ -52,7 +50,7 @@
         <!--            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>-->
                     <div class = "fl">
 					<!-- 陈静娴新增 -->
-						<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#setting">
+						<button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#setting">
 						  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</button>
 					<!-- 配置按钮 -->
@@ -108,12 +106,12 @@
 			  <div class="modal-body">
 				<div class="input-group">
 				  <span class="input-group-addon" id="sizing-addon2">URL</span>
-				  <input id = "url_info" type="text" class="form-control" placeholder="链接地址" aria-describedby="sizing-addon2">
+				  <input type="text" class="form-control" placeholder="链接地址" aria-describedby="sizing-addon2">
 				</div>
 			  </div>
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-				<button type="button" class="btn btn-primary" id = "check_value">确认</button>
+				<button type="button" class="btn btn-primary">确认</button>
 			  </div>
 			</div>
 		  </div>
@@ -131,36 +129,3 @@
 <!--        </div>-->
 <!--    </body>-->
 </html>
-<script>
- $("#check_value").click(
-        function () {
-            // 获取值
-            url_info = $("#url_info").val();
-            // 构造数据字典
-            send_data = {
-                "url_info":url_info,
-                "csrfmiddlewaretoken":"{{ csrf_token }}",
-
-            };
-            console.log(send_data)
-            //url值
-            url = "/change_api_url_post";
-            $.ajax(
-                {
-                    url:url,
-                    type:"post",
-                    data:send_data,
-                    success:function (data) {
-                        console.log('修改成功了！');
-                        //todo:modal-dialog 小时，页面恢复高亮
-                        window.location.reload();
-                    },
-                    error:function (error) {
-                        console.log(error);
-                    }
-                }
-            )
-
-        }
-    )
-</script>

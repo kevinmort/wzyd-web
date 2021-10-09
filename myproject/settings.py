@@ -119,7 +119,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+FONTS_URL = '/fonts/'
+
 MEDIA_URL = '/media/'
+API_URL = 'http://117.149.212.37:30080/xdjc'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_DIRS = [

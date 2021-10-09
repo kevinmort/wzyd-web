@@ -1,21 +1,49 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 from .models import Document
 from .forms import DocumentForm
 from .post_spike_detection import post_req,detection
 import os,time,json
+from django.conf import settings
+from django.http import JsonResponse
 BASE_DIR = os.getcwd()
-print('BASE_DIR:',BASE_DIR)
+# print('BASE_DIR:',BASE_DIR)
 
 file_docments = os.path.join(BASE_DIR,'media','documents')
-print('join:',file_docments)
-count = ''
+# print('join:',file_docments)
+
+# print('API_URL:', getattr(settings, "API_URL", "取不到就给一个默认值"))
+# setattr(settings,"API_URL","https://127.149.212.37:30080/xdjc")
+# print('API_URL:', getattr(settings, "API_URL", "取不到就给一个默认值"))
+
+
+@require_POST
+def change_api_url_post(request):
+    url = request.POST.get('url_info')   # url新地址参数
+    print('1:',url)
+    setattr(settings, "API_URL", url)
+    print('2 API_URL:', getattr(settings, "API_URL", "取不到就给一个默认值"))
+    result = {'Code': 1000, 'Message': 'OK', 'url': url}
+    return JsonResponse(result)
+
+
+# def change_api_url_get(request):
+#     url = getattr(settings, "API_URL", "https://117.149.212.37:30080/xdjc")
+#     if url is not None:
+#         result = {'Code': 0, 'Message': 'Succeeded: api url changed', 'url': url}
+#     else:
+#         result = {'Code': 503, 'Message': 'Failed: api url not changed', 'url': ''}
+#     return JsonResponse(result)
+
+
 def my_view(request):
     message = '请上传1个待检测的文件'
     message1 = ''
     message2=''
     count = ""
+    api_url = getattr(settings, "API_URL")  # 默认url
     # Handle file upload
     bg_img_flag = 0
     null_count_flag = 0
@@ -29,7 +57,7 @@ def my_view(request):
             newdoc.save()
             # rename all files
             change_name(file_docments)
-            respone_raw = detection(file_docments)
+            respone_raw = detection(file_docments,api_url)
             result = json.loads(respone_raw)
             count = len(result['Response'][2])
             positons = str(result['Response'][2])
@@ -72,6 +100,7 @@ def my_view(request):
     # Render list page with the documents and the form
     context = {'documents': documents,
                'form': form, 'message': message,
+               'url': api_url,
                'count': count,
                'random':random,'message1':message1,'message2':message2,
                'bg_img_flag':bg_img_flag,

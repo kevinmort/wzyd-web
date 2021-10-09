@@ -4,12 +4,11 @@
 		<meta http-equiv="content-type" content="text/html;charset=utf-8">
 		<meta content="always" name="referrer">
         <title>鞋钉检测</title>
-        <link rel="stylesheet" type="text/css" href="../static/mystyle.css">
-        <link rel="stylesheet" href="../static/bootstrap.min.css">
-        <script src="../static/myjs.js"></script>
-        <script src="../static/jquery.min.js"></script>
-        <script src="../static/bootstrap.min.css.map"></script>
-        <script src="../static/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/mystyle.css">
+        <link rel="stylesheet" href="/static/bootstrap.min.css">
+        <script src="/static/myjs.js"></script>
+        <script src="/static/jquery.min.js"></script>
+        <script src="/static/bootstrap.min.js"></script>
         <script type="text/javascript">
             function run2(){
                 var imgId2 = document.getElementById("scan_img");
@@ -21,44 +20,30 @@
 
     </head>
 
-    <body background="../static/bg.png">
+    <body>
         <div class="container">
-            <!-- List of uploaded documents -->
-       <!--      {% if documents %}
-                    {% for document in documents %}
-                        <img src="{{ document.docfile.url }}">
-                    {% endfor %}
-            {% else %}
-                <p>No documents.</p>
-            {% endif %} -->
-
             <!-- Upload form. Note enctype attribute! -->
             <div class="header2 thumbnail" style="background:rgba(102,204,255,0);border:none" >
                 <div class = "fl2" style="background:rgba(102,204,255,0);" >
-                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="../static/cmlogo.png"></div>
-                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="../static/egdelogo.png"></div>
+                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/cmlogo.png"></div>
+                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/egdelogo.png"></div>
 <!--                    <div class="inline-ele " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/hackathon.png"></div>-->
-                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="../static/starlogo.png"></div>
+                    <div class="inline-ele2 " style="background:rgba(102,204,255,0);"><img class="logimg" src="/static/starlogo.png"></div>
                 </div>
             </div>
             <div class="header thumbnail" style="background:rgba(102,204,255,0.2);">
                 <form action="{% url "my-view" %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-
         <!--            {{ message }}-->
 
         <!--            <p>{{ form.non_field_errors }}</p>-->
 
         <!--            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>-->
                     <div class = "fl">
-					<!-- 陈静娴新增 -->
-						<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#setting">
-						  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-						</button>
-					<!-- 配置按钮 -->
                         <div class="inline-ele "><p>
+                         {{ form.docfile.errors }}
                          <label for="id_docfile" class=" btn btn-primary">
-						 <input type="file" name="docfile" accept="image/*" required id="id_docfile">
+                            {{ form.docfile }} <!-- test -->
                           </label>
                         </p></div>
                         <div class="inline-ele"><p><input class="btn btn-primary" type="submit" value="上传图像"></p></div>
@@ -97,28 +82,6 @@
                 </div>
             </div>
         </div>
-		<!-- 陈静娴新增Modal -->
-		<div class="modal fade" id="setting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">URL配置</h4>
-			  </div>
-			  <div class="modal-body">
-				<div class="input-group">
-				  <span class="input-group-addon" id="sizing-addon2">URL</span>
-				  <input id = "url_info" type="text" class="form-control" placeholder="链接地址" aria-describedby="sizing-addon2">
-				</div>
-			  </div>
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-				<button type="button" class="btn btn-primary" id = "check_value">确认</button>
-			  </div>
-			</div>
-		  </div>
-		</div>
-		<!-- 新增URL配置输入框 -->
     </body>
 <!--    <body>-->
 <!--        <div class="container">-->
@@ -131,36 +94,3 @@
 <!--        </div>-->
 <!--    </body>-->
 </html>
-<script>
- $("#check_value").click(
-        function () {
-            // 获取值
-            url_info = $("#url_info").val();
-            // 构造数据字典
-            send_data = {
-                "url_info":url_info,
-                "csrfmiddlewaretoken":"{{ csrf_token }}",
-
-            };
-            console.log(send_data)
-            //url值
-            url = "/change_api_url_post";
-            $.ajax(
-                {
-                    url:url,
-                    type:"post",
-                    data:send_data,
-                    success:function (data) {
-                        console.log('修改成功了！');
-                        //todo:modal-dialog 小时，页面恢复高亮
-                        window.location.reload();
-                    },
-                    error:function (error) {
-                        console.log(error);
-                    }
-                }
-            )
-
-        }
-    )
-</script>
