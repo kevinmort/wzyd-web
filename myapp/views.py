@@ -100,7 +100,7 @@ def my_view(request):
     # Render list page with the documents and the form
     context = {'documents': documents,
                'form': form, 'message': message,
-               'url': api_url,
+               'api_url': api_url,
                'count': count,
                'random':random,'message1':message1,'message2':message2,
                'bg_img_flag':bg_img_flag,
