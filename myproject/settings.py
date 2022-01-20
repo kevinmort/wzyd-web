@@ -122,7 +122,8 @@ STATIC_URL = '/static/'
 FONTS_URL = '/fonts/'
 
 MEDIA_URL = '/media/'
-API_URL = 'http://117.149.212.37:30080/xdjc'
+# API_URL = 'http://117.149.212.37:30080/xdjc'
+API_URL = 'http://117.149.211.207:30080/xdjc'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
