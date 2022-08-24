@@ -103,11 +103,18 @@
 			<div class="modal-content">
 			  <div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">URL配置</h4>
+				<h4 class="modal-title" id="myModalLabel">功能和API地址配置</h4>
 			  </div>
 			  <div class="modal-body">
 				<div class="input-group">
-				  <span class="input-group-addon" id="sizing-addon2">URL</span>
+				  <span class="input-group-addon" id="sizing-addon22">功能</span>
+                    <label class="radio-inline"> <input type="radio" name="detect_type" value="0">鞋钉检测</label>
+                    <label class="radio-inline"> <input type="radio" name="detect_type"  value="1" checked>安全帽检</label>
+                    <label class="radio-inline"> <input type="radio" name="detect_type"  value="2">人脸检测</label>
+<!--				  <input id = "foo_info" value="{{ foo_info }}" type="text" class="form-control" placeholder="功能" aria-describedby="sizing-addon22">-->
+				</div>
+                <div class="input-group">
+				  <span class="input-group-addon" id="sizing-addon2">地址</span>
 				  <input id = "url_info" value="{{ api_url }}" type="text" class="form-control" placeholder="链接地址" aria-describedby="sizing-addon2">
 				</div>
 			  </div>
