@@ -125,7 +125,7 @@ MEDIA_URL = '/media/'
 API_URL = 'http://117.149.211.212:6080/json'
 # API_URL =   'http://117.149.212.37:30080/xdjc'
 # API_URL = 'http://117.149.211.207:30080/xdjc'
-# new :     'http://117.149.211.212:30080/xdjc'  2022年8月15日方文票
+# new :     'http://117.149.211.212:30080/xdjc'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_DIRS = [
