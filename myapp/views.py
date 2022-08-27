@@ -101,7 +101,7 @@ def my_view(request):
                 message1 = '合格'
                 message2 = '没有发现异常'
                 bg_img_flag = 1
-                null_count_flag = 1
+                null_count_flag = 0
         else:
             message1 = '请上传图片'
             message2 = '请上传图片'
