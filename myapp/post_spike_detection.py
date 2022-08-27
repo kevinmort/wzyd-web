@@ -110,7 +110,20 @@ def detection(path, url, fType):
                     print("status_code != 200")
 
             elif fType == 'face':
-                return 1;
-                pass
+                cascPath = "haarcascade_frontalface_default.xml"
+                faceCascade = cv2.CascadeClassifier(cascPath)
+                img = cv2.imread(photo_dir)
+                # img = cv2.imread('../out.jpg')
+                # Convert into grayscale
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                # Detect faces
+                faces = faceCascade.detectMultiScale(gray, 1.1, 4)
+                # Draw rectangle around the faces
+                for (x, y, w, h) in faces:
+                    cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
+                # print("new_name:", new_name)
+                cv2.imwrite(new_name, img)
+                return 0
 
 

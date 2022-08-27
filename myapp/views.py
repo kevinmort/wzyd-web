@@ -74,13 +74,15 @@ def my_view(request):
 
             # 脸部
             elif function_info == "face":
-                pass
+                result = detection(file_docments, None, function_info)
+                count = result
+                positons = str(result)
 
             print('------------------positons:', positons)
             # filelist = detection()
             # Redirect to the document list after POST
             # return redirect('my-view')
-            return redirect(f"{reverse('my-view')}?count={count}&positons={positons}")
+            return redirect(f"{reverse('my-view')}?count={count}&positons={positons}&function_info={function_info}")
             # return HttpResponseRedirect(reverse('getting_started_info', kwargs={'count': count}))
             # return redirect(f"{reverse('my-view')}?count='How to redirect with arguments'")
 
@@ -90,22 +92,26 @@ def my_view(request):
         print(request)
         count = request.GET.get('count', default=None)
         positons = request.GET.get('positons', default=None)
+        function_info = request.GET.get('function_info', default='mao')
         if count is not None and positons is not None:
             if int(count) >= 1:
                 message1 = '不合格，发现'+count+'个异常 ！'
                 message2 = "坐标：" + positons
                 bg_img_flag = 1
                 null_count_flag = 0
-
+                function_info = function_info
             elif int(count) == 0:
                 message1 = '检查合格。'
                 message2 = '没有发现异常'
                 bg_img_flag = 1
                 null_count_flag = 0
+                function_info = function_info
+
         else:
             message1 = '请上传图片'
             message2 = '请上传图片'
             bg_img_flag = 0
+            function_info = function_info
         form = DocumentForm()  # An empty, unbound form
 
     # Load documents for the list page
@@ -121,6 +127,7 @@ def my_view(request):
                'message2':message2,
                'bg_img_flag':bg_img_flag,
                'null_count_flag':null_count_flag,
+               'function_info':function_info
                }
     return render(request, 'list.html', context)
 
