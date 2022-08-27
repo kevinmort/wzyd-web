@@ -83,10 +83,11 @@ def detection(path, url, fType):
                         # for i in json.loads(response.text)['data']:
                         # {'type': 'YES', 'left_up_x': '667', 'left_up_y': '256', 'right_down_x': '715', 'right_down_y': '314'}
                         # {'type': 'YES', 'left_up_x': '823', 'left_up_y': '251', 'right_down_x': '871', 'right_down_y': '314'}
-                        for item in json.loads(result_raw.text)['data']:
-                            # print(item)
-                            cv2.rectangle(img, (item['left_up_x'], item['left_up_y']), (item['right_down_x'], item['right_down_y']), (0, 255, 0),
-                                          3)
+                        for i in json.loads(result_raw.text)['data']:
+                            print(i)
+                            cv2.rectangle(img,
+                                          (int(i['left_up_x']), int(i['left_up_y'])),
+                                          (int(i['right_down_x']), int(i['right_down_y'])),(0, 255, 0), 3)
                             new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                             print("new_name:", new_name)
                             cv2.imwrite(new_name, img)
