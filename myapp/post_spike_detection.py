@@ -84,7 +84,7 @@ def detection(path, url, fType):
                         # {'type': 'YES', 'left_up_x': '667', 'left_up_y': '256', 'right_down_x': '715', 'right_down_y': '314'}
                         # {'type': 'YES', 'left_up_x': '823', 'left_up_y': '251', 'right_down_x': '871', 'right_down_y': '314'}
                         data = json.loads(result_raw.text)['data']
-                        result = []
+                        result = {}
                         result['yes'] = 0
                         result['no'] = 0
                         postion = []
