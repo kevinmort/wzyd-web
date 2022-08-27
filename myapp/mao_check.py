@@ -22,7 +22,7 @@ def check_health():
     try:
         response = requests.post(url=URL, data=body, headers=headers)
         exception = 0
-        print(response.content)
+        print(json.dumps(response.content))
         if response.status_code == 200:
             response_code = json.loads(response.text)["errorcode"]
             if str(response_code) != '0':

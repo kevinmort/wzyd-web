@@ -123,7 +123,7 @@ FONTS_URL = '/fonts/'
 
 MEDIA_URL = '/media/'
 API_URL = 'http://117.149.211.212:6080/json'
-MAO_URL = 'http://117.149.211.212:28011'
+MAO_URL = 'http://117.149.211.212:28011/service'
 # API_URL =   'http://117.149.212.37:30080/xdjc'
 # API_URL = 'http://117.149.211.207:30080/xdjc'
 # new :     'http://117.149.211.212:30080/xdjc'

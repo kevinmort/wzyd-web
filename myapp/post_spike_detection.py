@@ -38,7 +38,7 @@ def post_req(raw,urls):
     return req.text
 
 
-def detection(path,url):
+def detection(path, url, fType):
     list = os.listdir(path)
     # 按顺序把文件夹中待检测的图片进行检测，标出鞋钉的位置再保存图片
     for photo in list:
@@ -48,25 +48,55 @@ def detection(path,url):
             image = Image.open(photo_dir)
             img = image_to_base64(image)
             name = photo_dir
-            # name = photo_dir.split('/')[-1]  # winows
-            # name = photo_dir.split('\\')[-1]  # linux
-            raw['image_name'] = name
-            img = str(img, encoding='utf-8')
-            raw['image_path'] = img
-            result_raw = post_req(raw,url)
-            result = json.loads(result_raw)
-            print(result)
-            # API输出结果显示，'NG', 4, [[144, 136, 20, 40], [213, 413, 17, 34], [213, 413, 17, 34], [213, 413, 17, 34]]表示检测出鞋钉、鞋钉的数量和坐标
-            im = cv2.imread(photo_dir)
-            img = im.copy()
-            # counts = len(result['Response'][2])
-            for item in result['Response'][2]:
-                # print(item)
-                cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
+
+            if fType == 'ding':
+                # name = photo_dir.split('/')[-1]  # winows
+                # name = photo_dir.split('\\')[-1]  # linux
+                raw['image_name'] = name
+                img = str(img, encoding='utf-8')
+                raw['image_path'] = img
+                result_raw = post_req(raw,url)
+                result = json.loads(result_raw)
+                print(result)
+                # API输出结果显示，'NG', 4, [[144, 136, 20, 40], [213, 413, 17, 34], [213, 413, 17, 34], [213, 413, 17, 34]]表示检测出鞋钉、鞋钉的数量和坐标
+                im = cv2.imread(photo_dir)
+                img = im.copy()
+                # counts = len(result['Response'][2])
+                for item in result['Response'][2]:
+                    # 标出长方形框
+                    cv2.rectangle(img, (item[0], item[1]), (item[0] + item[2], item[1] + item[3]), (0, 255, 0), 5)
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                 print("new_name:",new_name)
                 cv2.imwrite(new_name, img)
-            # return result['Response']
+                # return result['Response']
+
+            elif fType == 'mao':
+                img = str(img, encoding='utf-8')
+                headers = {"appId": "health_check", "token": "123", "requestId": "201803080000098300001", "requestTime": "2018-05-22 21:12:00"}
+                body = '{"serviceName":"tj_jgfsjc_app", "image":"%s", "contain": "health_check"}' % img  # 新平台
+                result_raw = requests.post(url=url, data=body, headers=headers)
+                im = cv2.imread(photo_dir)
+                img = im.copy()
+                if result_raw.status_code == 200:
+                    response_code = json.loads(result_raw.text)["errorcode"]
+                    if str(response_code) == '0':
+                        # for i in json.loads(response.text)['data']:
+                        # {'type': 'YES', 'left_up_x': '667', 'left_up_y': '256', 'right_down_x': '715', 'right_down_y': '314'}
+                        # {'type': 'YES', 'left_up_x': '823', 'left_up_y': '251', 'right_down_x': '871', 'right_down_y': '314'}
+                        for item in json.loads(result_raw.text)['data']:
+                            # print(item)
+                            cv2.rectangle(img, (item['left_up_x'], item['left_up_y']), (item['right_down_x'], item['right_down_y']), (0, 255, 0),
+                                          3)
+                            new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
+                            print("new_name:", new_name)
+                            cv2.imwrite(new_name, img)
+                        else:
+                            print("response_code ! = 0")
+                else:
+                    print("status_code != 200")
+
+            elif fType == 'face':
+                pass
             return result_raw
 
 

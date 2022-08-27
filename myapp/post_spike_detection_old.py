@@ -60,6 +60,7 @@ for photo in list:
         for item in result['Response'][2]:
             print(item)
             cv2.rectangle(img, (item[0], item[1]), (item[0]+item[2], item[1]+item[3]), (0, 255, 0),5)
+            cv2.putText()
             new_name = name.split('.')[0]+'_spike_detection.'+name.split('.')[1]
             new_photo_dir = os.path.join(path, new_name)
             print("new_name:", new_name)

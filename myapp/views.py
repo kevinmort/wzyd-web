@@ -43,13 +43,15 @@ def my_view(request):
     message1 = ''
     message2=''
     count = ""
-    api_url = getattr(settings, "API_URL")  # 默认url
+    ding_url = getattr(settings, "API_URL")  # 默认url
+    mao_url = getattr(settings, "MAO_URL")  # 默认url
     # Handle file upload
     bg_img_flag = 0
     null_count_flag = 0
     if request.method == 'POST':
+        function_info = request.POST.get('function_info')  # 获取功能参数
         form = DocumentForm(request.POST, request.FILES)
-        print(request.FILES)
+        print(function_info, request.FILES)
         if form.is_valid():
             # 删除所有文件
             delete_files(file_docments)
@@ -57,10 +59,15 @@ def my_view(request):
             newdoc.save()
             # rename all files
             change_name(file_docments)
-            respone_raw = detection(file_docments,api_url)
-            result = json.loads(respone_raw)
-            count = len(result['Response'][2])
-            positons = str(result['Response'][2])
+            if function_info == 'ding':
+                respone_raw = detection(file_docments,ding_url,function_info)
+                result = json.loads(respone_raw)
+                count = len(result['Response'][2])
+                positons = str(result['Response'][2])
+            elif function_info == 'mao':
+                respone_raw = detection(file_docments,mao_url,function_info)
+            elif function_info == "face":
+                pass
 
             print('------------------positons:', positons)
             # filelist = detection()
@@ -100,7 +107,7 @@ def my_view(request):
     # Render list page with the documents and the form
     context = {'documents': documents,
                'form': form, 'message': message,
-               'api_url': api_url,
+               'api_url': ding_url,
                'count': count,
                'random':random,
                'message1':message1,

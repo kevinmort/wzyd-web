@@ -18,7 +18,14 @@
                 result_bar.style.visibility ="visible";
             }
         </script>
-
+        <style type="text/css">
+            select {
+                direction: rtl;
+            }
+            select option {
+                direction: ltr;
+            }
+       </style>
     </head>
 
     <body background="../static/bg.png">
@@ -51,11 +58,18 @@
 
         <!--            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>-->
                     <div class = "fl">
-					<!-- 陈静娴新增 -->
+					<!-- 陈静娴新增
 						<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#setting">
 						  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						</button>
-					<!-- 配置按钮 -->
+					 配置按钮 -->
+                        <div class="inline-ele ">
+                                <select name="function_info" id = "function_info" class="btn-primary btn "  value="{{ function_info }}" >
+                                    <option value="mao"  selected="selected">安全帽识别</option>
+                                    <option value="ding">鞋钉识别</option>
+                                    <option value="face">笑脸识别</option>
+                                </select>
+                        </div>
                         <div class="inline-ele "><p>
                          <label for="id_docfile" class=" btn btn-primary">
 						 <input type="file" name="docfile" accept="image/*" required id="id_docfile">
