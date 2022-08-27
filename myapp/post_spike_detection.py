@@ -87,7 +87,9 @@ def detection(path, url, fType):
                             print(i)
                             cv2.rectangle(img,
                                           (int(i['left_up_x']), int(i['left_up_y'])),
-                                          (int(i['right_down_x']), int(i['right_down_y'])),(0, 255, 0), 3)
+                                          (int(i['right_down_x']), int(i['right_down_y'])),(0, 255, 0), 2)
+                            cv2.putText(img,
+                                        i['type'], (int(i['left_up_x']), int(i['left_up_y'])), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 255, 255), 2)
                             new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                             print("new_name:", new_name)
                             cv2.imwrite(new_name, img)
