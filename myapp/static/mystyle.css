@@ -37,12 +37,12 @@ html,body{
     margin-right: auto;}
 .left{
     width:48%;
-    /*height:600px;*/
+    min-height:150px;
     display:inline-block;
     border:thin solid blue}
 .content{
-   width:48%;
-    /*height:600px;*/
+    width:48%;
+    min-height:150px;
     display:inline-block;
     border:thin solid blue}
 .clearfix:after,

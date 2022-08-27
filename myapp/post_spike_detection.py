@@ -88,11 +88,11 @@ def detection(path, url, fType):
                             cv2.rectangle(img,
                                           (int(i['left_up_x']), int(i['left_up_y'])),
                                           (int(i['right_down_x']), int(i['right_down_y'])),(0, 255, 0), 2)
-                            if i['type'] != 'YES':
+                            if i['type'] == 'YES':
                                 cv2.putText(img, i['type'], (int(i['left_up_x']), int(i['left_up_y'])),
                                             cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 1)
                             else:
-                                cv2.putText(img,i['type'], (int(i['left_up_x']), int(i['left_up_y'])), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 2)
+                                cv2.putText(img,i['type'], (int(i['left_up_x']), int(i['left_up_y'])), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 2)
                             new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                             print("new_name:", new_name)
                             cv2.imwrite(new_name, img)
