@@ -68,7 +68,7 @@ def detection(path, url, fType):
                 new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
                 print("new_name:",new_name)
                 cv2.imwrite(new_name, img)
-                # return result['Response']
+                return result['Response'][2]
 
             elif fType == 'mao':
                 img = str(img, encoding='utf-8')
@@ -83,26 +83,35 @@ def detection(path, url, fType):
                         # for i in json.loads(response.text)['data']:
                         # {'type': 'YES', 'left_up_x': '667', 'left_up_y': '256', 'right_down_x': '715', 'right_down_y': '314'}
                         # {'type': 'YES', 'left_up_x': '823', 'left_up_y': '251', 'right_down_x': '871', 'right_down_y': '314'}
-                        for i in json.loads(result_raw.text)['data']:
+                        data = json.loads(result_raw.text)['data']
+                        result = []
+                        result['yes'] = 0
+                        result['no'] = 0
+                        postion = []
+                        for i in data:
                             print(i)
-                            cv2.rectangle(img,
-                                          (int(i['left_up_x']), int(i['left_up_y'])),
+                            cv2.rectangle(img, (int(i['left_up_x']), int(i['left_up_y'])),
                                           (int(i['right_down_x']), int(i['right_down_y'])),(0, 255, 0), 2)
                             if i['type'] == 'YES':
                                 cv2.putText(img, i['type'], (int(i['left_up_x']), int(i['left_up_y'])),
                                             cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 1)
-                            else:
+                                result['yes'] = result['yes'] +1
+                            elif i['type'] == 'NO':
                                 cv2.putText(img,i['type'], (int(i['left_up_x']), int(i['left_up_y'])), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 2)
                             new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
-                            print("new_name:", new_name)
+                            result['no'] = result['no'] + 1
+                            postion.append(i)
+                            # print("new_name:", new_name)
                             cv2.imwrite(new_name, img)
-                        else:
-                            print("response_code ! = 0")
+                        result['position'] = json.dumps(postion)
+                        return result
+                    else:
+                        print("response_code ! = 0")
                 else:
                     print("status_code != 200")
 
             elif fType == 'face':
+                return 1;
                 pass
-            return result_raw
 
 

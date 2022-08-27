@@ -59,15 +59,20 @@ def my_view(request):
             newdoc.save()
             # rename all files
             change_name(file_docments)
+
+            #  鞋钉检测
             if function_info == 'ding':
-                respone_raw = detection(file_docments,ding_url,function_info)
-                result = json.loads(respone_raw)
-                count = len(result['Response'][2])
-                positons = str(result['Response'][2])
+                result = detection(file_docments,ding_url,function_info)
+                count = len(result)
+                positons = str(result)
+
+            # 安全帽检测
             elif function_info == 'mao':
-                respone_raw = detection(file_docments,mao_url,function_info)
-                count = 1
-                positons = '坐标'
+                result = detection(file_docments, mao_url, function_info)
+                count = result['no']
+                positons = result['position']
+
+            # 脸部
             elif function_info == "face":
                 pass
 
@@ -87,18 +92,18 @@ def my_view(request):
         positons = request.GET.get('positons', default=None)
         if count is not None and positons is not None:
             if int(count) >= 1:
-                message1 = '不合格，发现钉子 '+count+'个'
-                message2 = "坐标："+ positons
+                message1 = '不合格，发现异常 '+count+'个！！'
+                message2 = "坐标：" + positons
                 bg_img_flag = 1
                 null_count_flag = 0
 
             elif int(count) == 0:
                 message1 = '合格'
-                message2 = '没有发现钉子'
+                message2 = '没有发现异常'
                 bg_img_flag = 1
                 null_count_flag = 1
         else:
-            message1 = '还未上传图片'
+            message1 = '请上传图片'
             message2 = '请上传图片'
             bg_img_flag = 0
         form = DocumentForm()  # An empty, unbound form
