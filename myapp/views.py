@@ -92,13 +92,13 @@ def my_view(request):
         positons = request.GET.get('positons', default=None)
         if count is not None and positons is not None:
             if int(count) >= 1:
-                message1 = '不合格，发现异常 '+count+'个！！'
+                message1 = '不合格，发现'+count+'个异常 ！'
                 message2 = "坐标：" + positons
                 bg_img_flag = 1
                 null_count_flag = 0
 
             elif int(count) == 0:
-                message1 = '合格'
+                message1 = '检查合格。'
                 message2 = '没有发现异常'
                 bg_img_flag = 1
                 null_count_flag = 0
