@@ -66,7 +66,7 @@ def my_view(request):
                 positons = str(result['Response'][2])
             elif function_info == 'mao':
                 respone_raw = detection(file_docments,mao_url,function_info)
-                count = 0
+                count = 1
                 positons = '坐标'
             elif function_info == "face":
                 pass
