@@ -98,8 +98,8 @@ def detection(path, url, fType):
                             elif i['type'] == 'NO':
                                 cv2.putText(img,i['type'], (int(i['left_up_x']), int(i['left_up_y'])), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 2)
                                 result['no'] = result['no'] + 1
+                                postion.append(i)
                             new_name = name.split('.')[0] + '_d.' + name.split('.')[1]
-                            postion.append(i)
                             # print("new_name:", new_name)
                             cv2.imwrite(new_name, img)
                         result['position'] = json.dumps(postion)
