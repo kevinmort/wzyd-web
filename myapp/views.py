@@ -102,7 +102,9 @@ def my_view(request):
                'form': form, 'message': message,
                'api_url': api_url,
                'count': count,
-               'random':random,'message1':message1,'message2':message2,
+               'random':random,
+               'message1':message1,
+               'message2':message2,
                'bg_img_flag':bg_img_flag,
                'null_count_flag':null_count_flag,
                }

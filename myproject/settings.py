@@ -25,7 +25,7 @@ SECRET_KEY = '@2tcr%p+je0h#+ujlqu*s%ax!$s2%^w9rh%=eg2jv270o3p0+b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost.localdomain','117.149.229.109']
+ALLOWED_HOSTS = ['localhost','localhost.localdomain','117.149.229.109']
 
 
 # Application definition
@@ -123,6 +123,7 @@ FONTS_URL = '/fonts/'
 
 MEDIA_URL = '/media/'
 API_URL = 'http://117.149.211.212:6080/json'
+MAO_URL = 'http://117.149.211.212:28011'
 # API_URL =   'http://117.149.212.37:30080/xdjc'
 # API_URL = 'http://117.149.211.207:30080/xdjc'
 # new :     'http://117.149.211.212:30080/xdjc'
